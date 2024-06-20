@@ -1,13 +1,11 @@
 import random
 import string
-
-def generate_password(length=12):
-    characters = string.ascii_letters + string.digits + string.punctuation
-    password = ''.join(random.choice(characters) for i in range(length))
-    return password
+import application
+from password import Password
 
 if __name__ == "__main__":
-    password_length = 12
-    for i in range(0, 8):
-        password = generate_password(password_length)
-        print(password)
+    app = application.Application()
+    app.master.title(application.APP_TITLE)
+    app.master.minsize(application.WINDOW_MIN_WIDTH, application.WINDOW_MIN_HEIGHT)
+    app.master.grid_size()
+    app.mainloop()
