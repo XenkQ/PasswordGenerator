@@ -5,8 +5,6 @@ import tkinter
 import pyperclip
 from pathlib import Path
 from password import CHARACTERS_BAD_FOR_PASSWORD, Password
-
-# Explicit imports to satisfy Flake8
 from tkinter import *
 from value_operations import ValueOperations
 
@@ -39,6 +37,20 @@ class GUI:
         self.entry_vars = {}
         self.var_associated_with_entry = {}
 
+        increase_button_image = PhotoImage(file=self.relative_to_images("arrow_up_button.png"))
+        decrease_button_image = PhotoImage(file=self.relative_to_images("arrow_down_button.png"))
+        label_background_2_image = PhotoImage(file=self.relative_to_images("label_background_2.png"))
+        password_entry_image = PhotoImage(file=self.relative_to_images("password_entry.png"))
+        regenerate_button_image = PhotoImage(file=self.relative_to_images("regenerate_button.png"))
+        app_background_image = PhotoImage(file=self.relative_to_images("app_background.png"))
+        copy_button_image = PhotoImage(file=self.relative_to_images("copy_button.png"))
+        section_background_image = PhotoImage(file=self.relative_to_images("section_background.png"))
+        exclude_entry_image = PhotoImage(file=self.relative_to_images("exclude_entry.png"))
+        entry_background_1_image = PhotoImage(file=self.relative_to_images("entry_background_1.png"))
+        entry_background_2_image = PhotoImage(file=self.relative_to_images("entry_background_2.png"))
+
+        # =============================================Main canvas===================================================#
+
         canvas = Canvas(
             self.window,
             bg="#B8E994",
@@ -49,21 +61,16 @@ class GUI:
             relief="ridge"
         )
 
-        increase_button_image = PhotoImage(file=self.relative_to_images("arrow_up_button.png"))
-        decrease_button_image = PhotoImage(file=self.relative_to_images("arrow_down_button.png"))
+        canvas.place(x=0, y=0)
 
-        # ==============================Password entry widget with reset and copy buttons==============================#
+        # ========================Password entry widget with regenerate and copy buttons=============================#
 
         self.password_entry_var = StringVar()
-
-        canvas.place(x=0, y=0)
-        entry_image_1 = PhotoImage(
-            file=self.relative_to_images("password_entry.png"))
 
         canvas.create_image(
             351.0,
             60.0,
-            image=entry_image_1,
+            image=password_entry_image,
         )
 
         self.password_entry = Entry(
@@ -79,11 +86,8 @@ class GUI:
             height=30.0
         )
 
-        button_image_1 = PhotoImage(
-            file=self.relative_to_images("regenerate_button.png"))
-
         generate_password_button = Button(
-            image=button_image_1,
+            image=regenerate_button_image,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: self.set_password_entry_value_to_new_generated_password(),
@@ -97,11 +101,8 @@ class GUI:
             height=40.0
         )
 
-        button_image_2 = PhotoImage(
-            file=self.relative_to_images("copy_button.png"))
-
         copy_password_button = Button(
-            image=button_image_2,
+            image=copy_button_image,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: pyperclip.copy(self.password_entry_var.get()),
@@ -115,42 +116,18 @@ class GUI:
             height=40.0
         )
 
-        # ============================================================================================================#
-
-        image_image_1 = PhotoImage(
-            file=self.relative_to_images("app_background.png"))
+        # =======================================Body with sections==================================================#
 
         canvas.create_image(
             399.0,
             329.0,
-            image=image_image_1
+            image=app_background_image
         )
-
-        image_image_2 = PhotoImage(
-            file=self.relative_to_images("section_background.png"))
 
         canvas.create_image(
             399.0,
             343.0,
-            image=image_image_2
-        )
-
-        button_image_3 = PhotoImage(
-            file=self.relative_to_images("exit_button.png"))
-
-        exit_button = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: exit(0),
-            relief="flat"
-        )
-
-        exit_button.place(
-            x=67.0,
-            y=498.0,
-            width=99.0,
-            height=40.0
+            image=section_background_image
         )
 
         canvas.create_text(
@@ -160,15 +137,6 @@ class GUI:
             text="Password strength: no input",
             fill="#3C6382",
             font=("Inter", 18 * -1)
-        )
-
-        entry_image_2 = PhotoImage(
-            file=self.relative_to_images("exclude_entry.png"))
-
-        canvas.create_image(
-            425.5,
-            395.0,
-            image=entry_image_2
         )
 
         canvas.create_text(
@@ -198,55 +166,13 @@ class GUI:
             font=("Inter", 18 * -1)
         )
 
-        image_image_7 = PhotoImage(
-            file=self.relative_to_images("label_background_2.png"))
-
-        canvas.create_image(
-            223.0,
-            287.0,
-            image=image_image_7
-        )
-
-        canvas.create_text(
-            208.0,
-            276.0,
-            anchor="nw",
-            text="A-Z",
-            fill="#3C6382",
-            font=("Inter", 18 * -1)
-        )
-
-        canvas.create_image(
-            336.0,
-            287.0,
-            image=image_image_7
-        )
-
-        canvas.create_text(
-            325.0,
-            276.0,
-            anchor="nw",
-            text="a-z",
-            fill="#3C6382",
-            font=("Inter", 18 * -1)
-        )
-
-        canvas.create_image(
-            451.0,
-            287.0,
-            image=image_image_7
-        )
-
-        canvas.create_text(
-            439.0,
-            276.0,
-            anchor="nw",
-            text="0-9",
-            fill="#3C6382",
-            font=("Inter", 18 * -1)
-        )
-
         # ==========================================Exclude entry widget=============================================#
+
+        canvas.create_image(
+            425.5,
+            395.0,
+            image=exclude_entry_image
+        )
 
         self.exclude_entry = Entry(
             **DEFAULT_ENTRY_STYLE_KWARGS,
@@ -260,20 +186,32 @@ class GUI:
             height=28.0
         )
 
-        entry_image_3 = PhotoImage(
-            file=self.relative_to_images("count_entry.png"))
-
         canvas.create_image(
             217.5,
             321.0,
-            image=entry_image_3
+            image=entry_background_1_image
         )
 
         self.exclude_entry.insert(0, CHARACTERS_BAD_FOR_PASSWORD)
 
         # ============================================================================================================#
 
-        #===================================Upper az count entry widget with buttons==================================#
+        #=============================Upper az count entry widget with buttons and label==============================#
+
+        canvas.create_image(
+            223.0,
+            287.0,
+            image=label_background_2_image
+        )
+
+        canvas.create_text(
+            208.0,
+            276.0,
+            anchor="nw",
+            text="A-Z",
+            fill="#3C6382",
+            font=("Inter", 18 * -1)
+        )
 
         self.upper_az_count_entry_var = IntVar(value=COUNT_ENTRY_START_VALUE)
         self.upper_az_count_entry_var.trace_add('write', self.on_count_entry_value_change)
@@ -296,13 +234,10 @@ class GUI:
             height=18.0
         )
 
-        image_image_3 = PhotoImage(
-            file=self.relative_to_images("entry_background_1.png"))
-
         canvas.create_image(
             215.0,
             321.0,
-            image=image_image_3
+            image=entry_background_1_image
         )
 
         upper_az_count_increment_button = Button(
@@ -339,18 +274,30 @@ class GUI:
             height=15.0
         )
 
-        entry_image_4 = PhotoImage(
-            file=self.relative_to_images("count_entry.png"))
-
         canvas.create_image(
             330.5,
             321.0,
-            image=entry_image_4
+            image=entry_background_1_image
         )
 
         # ============================================================================================================#
 
-        # ==================================Lower az count entry widget with buttons==================================#
+        # ==========================Lower az count entry widget with labels and buttons===============================#
+
+        canvas.create_image(
+            336.0,
+            287.0,
+            image=label_background_2_image
+        )
+
+        canvas.create_text(
+            325.0,
+            276.0,
+            anchor="nw",
+            text="a-z",
+            fill="#3C6382",
+            font=("Inter", 18 * -1)
+        )
 
         self.lower_az_count_entry_var = IntVar(value=COUNT_ENTRY_START_VALUE)
         self.lower_az_count_entry_var.trace_add('write', self.on_count_entry_value_change)
@@ -373,13 +320,10 @@ class GUI:
             height=18.0
         )
 
-        image_image_4 = PhotoImage(
-            file=self.relative_to_images("entry_background_1.png"))
-
         canvas.create_image(
             328.0,
             321.0,
-            image=image_image_4
+            image=entry_background_1_image
         )
 
         lower_az_count_increment_button = Button(
@@ -429,6 +373,21 @@ class GUI:
 
         # ===================================Digits count entry widget with buttons===================================#
 
+        canvas.create_image(
+            451.0,
+            287.0,
+            image=label_background_2_image
+        )
+
+        canvas.create_text(
+            439.0,
+            276.0,
+            anchor="nw",
+            text="0-9",
+            fill="#3C6382",
+            font=("Inter", 18 * -1)
+        )
+
         self.digits_count_entry_var = IntVar(value=COUNT_ENTRY_START_VALUE)
         self.digits_count_entry_var.trace_add('write', self.on_count_entry_value_change)
 
@@ -450,13 +409,10 @@ class GUI:
             height=18.0
         )
 
-        image_image_5 = PhotoImage(
-            file=self.relative_to_images("entry_background_1.png"))
-
         canvas.create_image(
             443.0,
             321.0,
-            image=image_image_5
+            image=entry_background_1_image
         )
 
         digits_count_increase_button = Button(
@@ -507,7 +463,7 @@ class GUI:
             textvariable=self.special_characters_count_entry_var
         )
 
-        var_name = str(self.digits_count_entry_var)
+        var_name = str(self.special_characters_count_entry_var)
         self.entry_vars[var_name] = self.special_characters_count_entry_var
         self.var_associated_with_entry[var_name] = self.special_characters_count_entry
 
@@ -518,13 +474,10 @@ class GUI:
             height=18.0
         )
 
-        image_image_6 = PhotoImage(
-            file=self.relative_to_images("entry_background_2.png"))
-
         canvas.create_image(
             588.0,
             321.0,
-            image=image_image_6
+            image=entry_background_2_image
         )
 
         special_character_count_increase_button = Button(
@@ -581,6 +534,28 @@ class GUI:
 
         # ============================================================================================================#
 
+        # ===========================================Exit button widget===============================================#
+
+        exit_button_img = PhotoImage(
+            file=self.relative_to_images("exit_button.png"))
+
+        exit_button = Button(
+            image=exit_button_img,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: exit(0),
+            relief="flat"
+        )
+
+        exit_button.place(
+            x=67.0,
+            y=498.0,
+            width=99.0,
+            height=40.0
+        )
+
+        # ============================================================================================================#
+
         self.set_password_entry_value_to_new_generated_password()
         self.window.mainloop()
 
@@ -590,6 +565,7 @@ class GUI:
     def on_count_entry_value_change(self, *args):
         if args[0] in self.entry_vars and args[0] in self.var_associated_with_entry:
             var = self.entry_vars[args[0]]
+            entry = self.var_associated_with_entry[args[0]]
 
             try:
                 value = var.get()
@@ -601,17 +577,23 @@ class GUI:
                     if value < COUNT_ENTRY_MIN_VALUE_LIMIT:
                         var.set(COUNT_ENTRY_MIN_VALUE_LIMIT)
 
-                    self.var_associated_with_entry[args[0]].icursor(END)
+                    entry.icursor(END)
                     self.set_password_entry_value_to_new_generated_password()
 
             except tkinter.TclError:
-                self.var_associated_with_entry[args[0]].delete(0, END)
+                entry.config(textvariable=None)
+                entry.delete(0, END)
 
+            try:
+                if entry.cget('textvariable'):
+                    value = int(entry.get())
+                    if value != 0:
+                        entry.config(textvariable=self.entry_vars[args[0]])
+                        var.set(var.get())
+                        self.set_password_entry_value_to_new_generated_password()
 
-            value = var.get()
-            print(var.get())
-            if value != 0:
-                var.set(var.get())
+            except ValueError:
+                pass
 
 
     def set_password_entry_value_to_new_generated_password(self):
