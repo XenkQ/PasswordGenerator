@@ -6,5 +6,6 @@ When searching for gui builder that is using tkinter I found this repo https://g
 ## Stack
 - python
 - tkinter
-- https://github.com/ParthJadhav/Tkinter-Designer
-- figma for app design
+- figma (for app design)
+- https://github.com/ParthJadhav/Tkinter-Designer (It seems to me that it is a good tool for small projects, but for medium and larger projects you can feel its limits for example, a limited number of widgets compatible with tkinter)
+- PyInstaller (for making exe file with following command: *python -m PyInstaller --onefile --name="Password Generator" --windowed --hidden-import=pyperclip --icon=img/key.ico main.py*)

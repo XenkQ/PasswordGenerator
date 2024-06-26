@@ -33,21 +33,25 @@ class GUI:
         self.window.configure(bg="#B8E994")
         self.window.resizable(False, False)
         self.window.title(APP_NAME)
+        self.window.iconbitmap("img/key.ico")
 
         self.entry_vars = {}
         self.var_associated_with_entry = {}
 
-        increase_button_image = PhotoImage(file=self.relative_to_images("arrow_up_button.png"))
-        decrease_button_image = PhotoImage(file=self.relative_to_images("arrow_down_button.png"))
-        label_background_2_image = PhotoImage(file=self.relative_to_images("label_background_2.png"))
-        password_entry_image = PhotoImage(file=self.relative_to_images("password_entry.png"))
-        regenerate_button_image = PhotoImage(file=self.relative_to_images("regenerate_button.png"))
-        app_background_image = PhotoImage(file=self.relative_to_images("app_background.png"))
-        copy_button_image = PhotoImage(file=self.relative_to_images("copy_button.png"))
-        section_background_image = PhotoImage(file=self.relative_to_images("section_background.png"))
-        exclude_entry_image = PhotoImage(file=self.relative_to_images("exclude_entry.png"))
-        entry_background_1_image = PhotoImage(file=self.relative_to_images("entry_background_1.png"))
-        entry_background_2_image = PhotoImage(file=self.relative_to_images("entry_background_2.png"))
+        increase_button_image = PhotoImage(file="img/arrow_up_button.png")
+        decrease_button_image = PhotoImage(file="img/arrow_down_button.png")
+        label_background_1_image = PhotoImage(file="img/label_background_1.png")
+        label_background_2_image = PhotoImage(file="img/label_background_2.png")
+        password_entry_image = PhotoImage(file="img/password_entry.png")
+        regenerate_button_image = PhotoImage(file="img/regenerate_button.png")
+        app_background_image = PhotoImage(file="img/app_background.png")
+        copy_button_image = PhotoImage(file="img/copy_button.png")
+        section_background_image = PhotoImage(file="img/section_background.png")
+        exclude_entry_image = PhotoImage(file="img/exclude_entry.png")
+        entry_background_1_image = PhotoImage(file="img/entry_background_1.png")
+        entry_background_2_image = PhotoImage(file="img/entry_background_2.png")
+        count_entry_image = PhotoImage(file="img/count_entry.png")
+        exit_button_img = PhotoImage(file="img/exit_button.png")
 
         # =============================================Main canvas===================================================#
 
@@ -360,13 +364,10 @@ class GUI:
             height=15.0
         )
 
-        entry_image_5 = PhotoImage(
-            file=self.relative_to_images("count_entry.png"))
-
         canvas.create_image(
             445.5,
             321.0,
-            image=entry_image_5
+            image=count_entry_image
         )
 
         # ============================================================================================================#
@@ -514,13 +515,10 @@ class GUI:
             height=15.0
         )
 
-        image_image_10 = PhotoImage(
-            file=self.relative_to_images("label_background_1.png"))
-
         canvas.create_image(
             596.0,
             287.0,
-            image=image_image_10
+            image=label_background_1_image
         )
 
         canvas.create_text(
@@ -535,9 +533,6 @@ class GUI:
         # ============================================================================================================#
 
         # ===========================================Exit button widget===============================================#
-
-        exit_button_img = PhotoImage(
-            file=self.relative_to_images("exit_button.png"))
 
         exit_button = Button(
             image=exit_button_img,
@@ -559,23 +554,20 @@ class GUI:
         self.set_password_entry_value_to_new_generated_password()
         self.window.mainloop()
 
-    def relative_to_images(self, path: str) -> Path:
-        return ASSETS_PATH / Path(path)
-
     def on_count_entry_value_change(self, *args):
         if args[0] in self.entry_vars and args[0] in self.var_associated_with_entry:
-            var = self.entry_vars[args[0]]
+            entry_var = self.entry_vars[args[0]]
             entry = self.var_associated_with_entry[args[0]]
 
             try:
-                value = var.get()
+                value = entry_var.get()
 
                 if not ValueOperations.value_in_range(value, COUNT_ENTRY_MIN_VALUE_LIMIT, COUNT_ENTRY_MAX_VALUE_LIMIT):
                     if value > COUNT_ENTRY_MAX_VALUE_LIMIT:
-                        var.set(COUNT_ENTRY_MAX_VALUE_LIMIT)
+                        entry_var.set(COUNT_ENTRY_MAX_VALUE_LIMIT)
 
                     if value < COUNT_ENTRY_MIN_VALUE_LIMIT:
-                        var.set(COUNT_ENTRY_MIN_VALUE_LIMIT)
+                        entry_var.set(COUNT_ENTRY_MIN_VALUE_LIMIT)
 
                     entry.icursor(END)
                     self.set_password_entry_value_to_new_generated_password()
@@ -586,15 +578,13 @@ class GUI:
 
             try:
                 if entry.cget('textvariable'):
-                    value = int(entry.get())
-                    if value != 0:
+                    if int(entry.get()) != 0 or entry_var.get() == 0:
                         entry.config(textvariable=self.entry_vars[args[0]])
-                        var.set(var.get())
+                        entry_var.set(entry_var.get())
                         self.set_password_entry_value_to_new_generated_password()
 
             except ValueError:
                 pass
-
 
     def set_password_entry_value_to_new_generated_password(self):
         pwd = Password.generate_password(
